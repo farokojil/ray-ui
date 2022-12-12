@@ -6,7 +6,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { usePageEffect } from "../core/page.js";
 
 export default function Home(): JSX.Element {
-  usePageEffect({ title: "React App" });
+  usePageEffect({ title: "Ray Invest" });
 
   return (
     <Container sx={{ py: "20vh" }} maxWidth="sm">
