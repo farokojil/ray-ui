@@ -6,7 +6,7 @@ import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useTheme } from "../core/theme.js";
 import { LoginDialog } from "../dialogs/LoginDialog.js";
-import { Home, Privacy, Settings, Terms } from "../routes/index.js";
+import { Home, Privacy, Settings, Terms, Ticker } from "../routes/index.js";
 import { AppToolbar } from "./AppToolbar.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 
@@ -36,6 +36,11 @@ export function App(): JSX.Element {
           <Route
             path="/settings"
             element={<React.Suspense children={<Settings />} />}
+          />
+
+          <Route
+            path="/ticker/:ticker"
+            element={<React.Suspense children={<Ticker />} />}
           />
         </Routes>
 
