@@ -1,22 +1,23 @@
 import { Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTickerInfo } from "../core/ksqlDB.js";
+import { getTickerInfo, InfoItem } from "../core/ksqlDB.js";
 import { usePageEffect } from "../core/page.js";
 
 export default function Ticker(): JSX.Element {
   let { ticker } = useParams<"ticker">();
   ticker += ".DE"; // TODO: fix 404 errors when . is added to URL
 
-  const [info, setInfo] = useState<string | null>(null);
+  const [info, setInfo] = useState<InfoItem | null>(null);
 
   usePageEffect({ title: "Ticker Page " + ticker });
   useEffect(() => {
     const fetchData = async () => {
-      const infoResponse = await getTickerInfo(String(ticker));
-      const info = await infoResponse.text();
-      setInfo(info);
-      console.log(info);
+      const infoItems: InfoItem[] = (await getTickerInfo(
+        String(ticker)
+      )) as InfoItem[];
+      setInfo(infoItems[0]);
+      console.log(infoItems[0]);
     };
 
     fetchData().catch(console.error);
@@ -30,7 +31,7 @@ export default function Ticker(): JSX.Element {
       <Typography variant="h1" gutterBottom>
         Ticker Page {ticker}
       </Typography>
-      <Typography paragraph>INFO: {String(info)}</Typography>
+      <Typography paragraph>INFO: {String(info?.symbol)}</Typography>
     </Container>
   );
 }
