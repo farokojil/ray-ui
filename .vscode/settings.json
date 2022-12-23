@@ -72,5 +72,6 @@
     "webflow",
     "yarnpkg",
     "yarnrc"
-  ]
+  ],
+  "cSpell.words": ["ksql", "Ksqldb"]
 }
