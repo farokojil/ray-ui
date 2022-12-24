@@ -10,7 +10,17 @@ export interface MetaData {
 
 export interface InfoItem {
   symbol: string;
-  eventTime: string;
+  country: string;
+  name: string;
+  business_summary: string;
+  industry: string;
+  sector: string;
+  logo_url: string;
+  website: string;
+  full_time_employees: number;
+  current_price: number;
+  market_cap: number;
+  currency: string;
 }
 
 export interface QueryResponse {
@@ -40,7 +50,11 @@ export const getTickerInfo = async (ticker: string) => {
 };
 
 function getTickerQuery(ticker: string): string {
-  return `SELECT * FROM INFO_TEST3 WHERE SYMBOL='${ticker}';`;
+  return `
+  SELECT symbol,country,long_Name,long_business_summary,industry,sector,logo_url,website,full_time_employees,current_price,market_cap,financial_currency
+  FROM info_t
+  WHERE symbol='${ticker}';
+  `;
 }
 
 function parseResponse(responseText: string): InfoItem[] {
@@ -56,7 +70,21 @@ function parseResponse(responseText: string): InfoItem[] {
     }
 
     const rowJSON = JSON.parse(row);
-    const item: InfoItem = { symbol: rowJSON[0], eventTime: rowJSON[1] };
+    const item: InfoItem = {
+      symbol: rowJSON[0],
+      country: rowJSON[1],
+      name: rowJSON[2],
+      business_summary: rowJSON[3],
+      industry: rowJSON[4],
+      sector: rowJSON[5],
+      logo_url: rowJSON[6],
+      website: rowJSON[7],
+      full_time_employees: rowJSON[8],
+      current_price: rowJSON[9],
+      market_cap: rowJSON[10],
+      currency: rowJSON[11],
+    };
+
     return item;
   });
 }
